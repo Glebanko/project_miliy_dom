@@ -3,7 +3,7 @@
 namespace frontend\widget\hit;
 
 use yii\base\Widget;
-use backend\models\Category;
+use common\model\Category;
 use Yii;
 class Hit extends Widget{
     public function run(){

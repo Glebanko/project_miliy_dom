@@ -2,9 +2,9 @@
 
 namespace frontend\widget\newgoods;
 
-use backend\models\Goods;
+use common\model\Goods;
 use yii\base\Widget;
-use backend\models\Category;
+use common\model\Category;
 use Yii;
 class Newgoods extends Widget{
     public function run(){

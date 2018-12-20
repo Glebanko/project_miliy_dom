@@ -1,4 +1,5 @@
 <?php
 return [
-    'adminEmail' => 'admin@example.com',
+    'adminEmail' => 'manager@miliydom.com.ua',
+    'url'  =>  'http://miliydom.com.ua/'
 ];

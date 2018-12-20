@@ -43,7 +43,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'goods/<id:[0-9a-zA-Z_-]+>'=>'site/goods',
-            
+                'cartgoods/<id:[0-9a-zA-Z_-]+>'=>'site/cartgoods',            
                 '' => 'site/index',
                 '<action>' => 'site/<action>',
             ],

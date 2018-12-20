@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+	/*width:100%;*/
 }
 
 .wrap {
@@ -20,20 +21,86 @@ body {
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
-
+body .dateText{
+    font-size: 14px;
+    color: #fff;
+    margin-top: 14px;
+}
+body .squards{
+    width:100%;
+    height: 100%;
+}
 .jumbotron {
     text-align: center;
     background-color: transparent;
 }
 
 .jumbotron .btn {
-    font-size: 21px;
+    font-size: 18px;
     padding: 14px 24px;
 }
 
 .not-set {
     color: #c55;
     font-style: italic;
+}
+body .color .fa-square{
+    position: relative;
+}
+body .color .fa-square i{
+    font-size: 15px;
+    position: absolute;
+    color:#42FC05;
+    top:5px;
+    right: 5px;
+    cursor: pointer;
+}
+body .frontend-setup-form .blocks span.fa-plus-circle,body .frontend-setup-form .blocks span.fa-minus-circle{
+    float: right;
+    margin-right: 500px;
+    cursor: pointer;
+}
+
+body .frontend-setup-form .blocks .inner{
+    background: #dedfe0 none repeat scroll 0 0;
+    display: none;
+    padding: 0 25px 25px;
+    width: 795px;
+}
+body .frontend-setup-form #accordion p{
+    display: block;
+}
+
+body .patern{
+    max-width: 1000px;
+}
+
+
+body .color{
+    font-size: 18px;
+}
+body .colorinput{
+    cursor: pointer;
+}
+
+body .frontend-setup-form .blocks h3{
+    cursor: pointer;
+}
+
+
+body .colorinput .colorinputremove{
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    color: #00f900;
+    font-size: 49px;
+    height: 86%;
+    left: 0;
+    padding: 6px 9px 6px 11px;
+    position: absolute;
+    text-align: center;
+    top: 5px;
+    z-index: 2;
 }
 
 /* add sorting icons to gridview sort links */
@@ -72,13 +139,13 @@ a.desc:after {
     content: "\e156";
 }
 
-.grid-view td {
+/*.grid-views td {
     white-space: nowrap;
-}
+}*/
 
 .grid-view .filters input,
 .grid-view .filters select {
-    min-width: 50px;
+    min-width: 20px;
 }
 
 .hint-block {
@@ -96,25 +163,117 @@ a.desc:after {
 }
 
 /* align the logout "link" (button in form) of the navbar */
-.nav li > form > button.logout {
-    padding: 15px;
-    border: none;
+.nav > li > form {
+    padding: 8px;
 }
-
-@media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
-        text-align: left;
-        width: 100%;
-        padding: 10px 15px;
+/*.table-bordered{
+    table-layout: fixed;
+}*/
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td{
+    max-width: 180px;
+    text-align: justify;
+    word-wrap: break-word;
+}
+/*body{
+    overflow-x: auto !important
+}
+body .content{
+    overflow-x: auto;
+}*/
+html body .wrapper.godsinshop{
+    width: 2955px;
+}
+html body.goods-class{
+    overflow-x: auto;
+    background: #ECF0F5;
+    min-width: 1680px;
     }
+
+html body.goods{
+    overflow-x: auto;
+    background: #ECF0F5;
+    min-width: 2200px;
+    }
+html{
+    overflow-x:auto;
+}/*
+html body .wrapper{
+    overflow-x: auto;
+}*/
+body .control-sidebar.control-sidebar-dark{
+    display: none;
 }
 
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+body .theTable .table {
+    max-width: none;
+    width: 1800px;
+
+}
+@media(max-width:768px) {
+	.nav li > form {
+	    padding: 3px;
+	}
+}
+
+.nav > li > form > button:hover {
     text-decoration: none;
 }
 
-.nav > li > form > button.logout:focus {
-    outline: none;
+#sortable{
+    height: 400px;
+    display: block;
+    width: 200px;
+    margin: auto;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #d2d6de;
+}
+.col-lg-6 #sortable{
+    min-height: 900px;
+}
+.col-lg-6 #sortable li{
+    height: 70px;
+}
+
+.draggable{
+    z-index: 5000;
+}
+
+.col-lg-3 .dropzone .dz-default.dz-message{
+    position: static;
+    width: 100%;
+    margin: 0;
+}
+
+#sortable li{
+    list-style: none;
+    padding: 10px 50px;
+    font-size: 15px;
+}
+#sortable li span{
+    float: right;
+    margin-top: 2px;
+    cursor: pointer;
+
+}
+#forIMG img:hover{
+    cursor: pointer;
+
+}
+
+#secure{
+    margin-top: 20px;
+}
+body .wrapper{
+    overflow: visible;
+}
+body .content-wrapper,body .right-side{
+    width: auto;
+}
+body .table-responsive{
+    overflow: visible;
+}
+
+body .main-header .navbar-custom-menu, .main-header .navbar-right{
+    float: none;
 }

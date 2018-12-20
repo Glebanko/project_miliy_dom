@@ -11,12 +11,19 @@ function isMobile() {
             <? $x = 0; foreach ($categoryGoods as $good){?>
                 <?foreach ($good['hit'] as $key => $good){?>
                     <? $x++; if($x == 4){break;}?>
+                    <?
+                        $prices[] = $good['price']['price1'];
+                        $prices[] = $good['price']['price2'];
+                        $prices[] = $good['price']['priceEvro'];
+                        $prices[] = $good['price']['priceSem'];
+                        $resultPrices = array_shift($prices);
+                    ?>
                     <div class="good">
                         <i class="sticker sticker_bestseller"></i>
                         <div class="name">
                             <span><?=$good['title']?></span>
                         </div>
-                        <a href="">
+                        <a href="/cartgoods/<? echo $good['slug_gods'];?>">
                             <div class="img">
                                 <img src="http://miliydom.com.ua/frontend/web/image/<? foreach ($good['image'] as $keyImage => $image){?><?if($image['forHome'] == 1){$i++;?><?=$image['path'] . $image['name']?><?}?><?}?>" alt="">
                                 <span>Артикул: <?=$good['article']['article']?></span>
@@ -31,30 +38,28 @@ function isMobile() {
                                 </div>
                                 <div class="priceBuy">
                                     <span><?
-                                        if(($good['price']['price2'] != null) or ($good['price']['priceEvro'] != null) or ($good['price']['priceSem'] != null)){?>
-                                            <span>от </span>
-                                        <?}?>
-                                        <?if($good['price']['price1'] != 0){
-                                            echo $good['price']['price1'];
-                                        }
-                                        if(($good['price']['price1'] == 0) or ($good['price']['price2'] ==  0 && null) or ($good['price']['priceEvro'] == 0 && null)){
-                                            echo $good['price']['price2'];
-                                        }
-                                        if(($good['price']['price1'] == 0) or ($good['price']['price2'] == 0 && null)){
-                                            echo $good['price']['priceEvro'];
-                                        }
-                                        if(($good['price']['price1'] == 0) or ($good['price']['price2'] ==  0 && null) or ($good['price']['priceEvro'] == 0 && null)){
-                                            echo $good['price']['priceSem'];
-                                        }?>
+                                            $title = explode(" ", $good['title']);
+                                            if($title[0] == "Постельное" or $title[0] == "Плед"){?>
+                                                <span>от </span>
+                                            <?}?>
+                                        <?
+                                        echo $resultPrices;
+                                        unset($title);
+                                        ?>
                                         <sup>
                                             грн
                                         </sup>
                                     </span>
-                                    <form id="goBasket">
-                                        <button type="submit" class="submitButtonBasket">В КОРЗИНУ</button>
-                                        <input type="hidden" name="id" value="<?echo $good['id'];?>">
-                                    </form>
-                                </div>
+                                <form class="goBasket">
+                                    <button class="submitButtonBasket">В КОРЗИНУ</button>
+                                    <input type="hidden" name="id" value="<?echo $good['id'];?>">
+                                    <input type="hidden" name="price" value="<? echo $resultPrices;?>">
+                                    <?
+                                    unset($resultPrices);
+                                    unset($prices);
+                                    ?>
+                                </form>
+                            </div>
                             </div>
                             <div class="size">
                                 <span>
@@ -100,12 +105,19 @@ function isMobile() {
         <? $x = 0; foreach ($categoryGoods as $good){?>
             <?foreach ($good['hit'] as $key => $good){?>
                 <? $x++; if($x < 4){continue;}?>
+                 <?
+                        $prices[] = $good['price']['price1'];
+                        $prices[] = $good['price']['price2'];
+                        $prices[] = $good['price']['priceEvro'];
+                        $prices[] = $good['price']['priceSem'];
+                        $resultPrices = array_shift($prices);
+                    ?>
                 <div class="good">
                     <i class="sticker sticker_bestseller		"></i>
                     <div class="name">
                         <span><?=$good['title']?></span>
                     </div>
-                    <a href="">
+                    <a href="/cartgoods/<? echo $good['slug_gods'];?>">
                         <div class="img">
                             <img src="http://miliydom.com.ua/frontend/web/image/<? foreach ($good['image'] as $keyImage => $image){?><?if($image['forHome'] == 1){$i++;?><?=$image['path'] . $image['name']?><?}?><?}?>" alt="">
                             <span>Артикул: <?=$good['article']['article']?></span>
@@ -120,26 +132,27 @@ function isMobile() {
                             </div>
                             <div class="priceBuy">
                                     <span><?
-                                        if($good['price']['price2'] != null or $good['price']['priceEvro'] != null or $good['price']['priceSem'] != null){?>
-                                            <span>от </span>
-                                        <?}?>
-                                        <?if($good['price']['price1'] != 0){
-                                            echo $good['price']['price1'];
-                                        }
-                                        if($good['price']['price1'] == 0 or ($good['price']['price2'] ==  0 && null) or ($good['price']['priceEvro'] == 0 && null)){
-                                            echo $good['price']['price2'];
-                                        }
-                                        if(($good['price']['price1'] == 0) or ($good['price']['price2'] == 0 && null)){
-                                            echo $good['price']['priceEvro'];
-                                        }
-                                        if(($good['price']['price1'] == 0) or ($good['price']['price2'] ==  0 && null) or ($good['price']['priceEvro'] == 0 && null)){
-                                            echo $good['price']['priceSem'];
-                                        }?>
+                                            $title = explode(" ", $good['title']);
+                                            if($title[0] == "Постельное" or $title[0] == "Плед"){?>
+                                                <span>от </span>
+                                            <?}?>
+                                        <?
+                                        echo $resultPrices;
+                                        unset($title);
+                                        ?>
                                         <sup>
                                             грн
                                         </sup>
                                     </span>
-                                <button>В КОРЗИНУ</button>
+                                <form class="goBasket">
+                                    <button class="submitButtonBasket">В КОРЗИНУ</button>
+                                    <input type="hidden" name="id" value="<?echo $good['id'];?>">
+                                    <input type="hidden" name="price" value="<? echo $resultPrices;?>">
+                                    <?
+                                    unset($resultPrices);
+                                    unset($prices);
+                                    ?>
+                                </form>
                             </div>
                         </div>
                         <div class="size">
@@ -186,13 +199,20 @@ function isMobile() {
     <?foreach ($categoryGoods as $good){?>
         <? $q = 0; foreach ($good['hit'] as $key => $good){?>
             <div class="item <?if($q == 0){echo "active";} $q++;?> display-none-pc">
+                 <?
+                    $prices[] = $good['price']['price1'];
+                    $prices[] = $good['price']['price2'];
+                    $prices[] = $good['price']['priceEvro'];
+                    $prices[] = $good['price']['priceSem'];
+                    $resultPrices = array_shift($prices);
+                ?>
                 <div class="goods-settings">
                     <div class="good">
                         <i class="sticker sticker_bestseller		"></i>
                         <div class="name">
                             <span><?=$good['title']?></span>
                         </div>
-                        <a href="">
+                        <a href="/cartgoods/<? echo $good['slug_gods'];?>">
                             <div class="img">
                                 <img src="http://miliydom.com.ua/frontend/web/image/<? foreach ($good['image'] as $keyImage => $image){?><?if($image['forHome'] == 1){$i++;?><?=$image['path'] . $image['name']?><?}?><?}?>" alt="">
                                 <span>Артикул: <?=$good['article']['article']?></span>
@@ -206,28 +226,29 @@ function isMobile() {
                                     </a>
                                 </div>
                                 <div class="priceBuy">
-                                        <span><?
-                                            if($good['price']['price2'] != null or $good['price']['priceEvro'] != null or $good['price']['priceSem'] != null){?>
+                                    <span><?
+                                            $title = explode(" ", $good['title']);
+                                            if($title[0] == "Постельное" or $title[0] == "Плед"){?>
                                                 <span>от </span>
                                             <?}?>
-                                            <?if($good['price']['price1'] != 0){
-                                                echo $good['price']['price1'];
-                                            }
-                                            if($good['price']['price1'] == 0 or ($good['price']['price2'] ==  0 && null) or ($good['price']['priceEvro'] == 0 && null)){
-                                                echo $good['price']['price2'];
-                                            }
-                                            if(($good['price']['price1'] == 0) or ($good['price']['price2'] == 0 && null)){
-                                                echo $good['price']['priceEvro'];
-                                            }
-                                            if(($good['price']['price1'] == 0) or ($good['price']['price2'] ==  0 && null) or ($good['price']['priceEvro'] == 0 && null)){
-                                                echo $good['price']['priceSem'];
-                                            }?>
-                                            <sup>
-                                                грн
-                                            </sup>
-                                        </span>
-                                    <button>В КОРЗИНУ</button>
-                                </div>
+                                        <?
+                                        echo $resultPrices;
+                                        unset($title);
+                                        ?>
+                                        <sup>
+                                            грн
+                                        </sup>
+                                    </span>
+                                <form class="goBasket">
+                                    <button class="submitButtonBasket">В КОРЗИНУ</button>
+                                    <input type="hidden" name="id" value="<?echo $good['id'];?>">
+                                    <input type="hidden" name="price" value="<? echo $resultPrices;?>">
+                                    <?
+                                    unset($resultPrices);
+                                    unset($prices);
+                                    ?>
+                                </form>
+                            </div>
                             </div>
                             <div class="size">
                                     <span>

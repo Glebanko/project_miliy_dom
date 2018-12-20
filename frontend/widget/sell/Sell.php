@@ -3,7 +3,7 @@
 namespace frontend\widget\sell;
 
 use yii\base\Widget;
-use backend\models\Category;
+use common\model\Category;
 use Yii;
 class Sell extends Widget{
     public function run(){

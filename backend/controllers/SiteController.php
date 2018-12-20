@@ -13,7 +13,7 @@ use common\models\LoginForm;
 class SiteController extends Controller
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -26,11 +26,14 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin','manager','moderator'],
                     ],
                 ],
+                'denyCallback' => function($rule, $action) {
+                    Yii::$app->session->setFlash('info', 'У вас нет прав доступа');
+                    return $action->controller->redirect('/admin/user/security/login');
+                },
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -42,7 +45,7 @@ class SiteController extends Controller
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function actions()
     {
@@ -60,11 +63,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->identity->role == "admin"){
-            return $this->render('index');
-        }else{
-            return $this->redirect('/');
-        }
+        return $this->render('index');
     }
 
     /**
@@ -82,8 +81,6 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            $model->password = '';
-
             return $this->render('login', [
                 'model' => $model,
             ]);

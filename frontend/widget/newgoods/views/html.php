@@ -8,7 +8,7 @@
                         <div class="name">
                             <span><?=$good['title']?></span>
                         </div>
-                        <a href="">
+                        <a href="/cartgoods/<? echo $good['slug_gods'];?>">
                             <div class="img">
                                 <img src="http://miliydom.com.ua/frontend/web/image/<? foreach ($good['image'] as $keyImage => $image){?><?if($image['forHome'] == 1){$i++;?><?=$image['path'] . $image['name']?><?}?><?}?>" alt="">
                                 <span>Артикул: <?=$good['article']['article']?></span>
@@ -42,7 +42,10 @@
                                             грн
                                         </sup>
                                     </span>
-                                    <button>В КОРЗИНУ</button>
+                                    <form class="goBasket">
+                                        <button class="submitButtonBasket">В КОРЗИНУ</button>
+                                        <input type="hidden" name="id" value="<?echo $good['id'];?>">
+                                    </form>
                                 </div>
                             </div>
                             <div class="size">
@@ -92,7 +95,7 @@
                         <div class="name">
                             <span><?=$good['title']?></span>
                         </div>
-                        <a href="">
+                        <a href="/cartgoods/<? echo $good['slug_gods'];?>">
                             <div class="img">
                                 <img src="http://miliydom.com.ua/frontend/web/image/<? foreach ($good['image'] as $keyImage => $image){?><?if($image['forHome'] == 1){$i++;?><?=$image['path'] . $image['name']?><?}?><?}?>" alt="">
                                 <span>Артикул: <?=$good['article']['article']?></span>
@@ -126,7 +129,10 @@
                                             грн
                                         </sup>
                                     </span>
-                                    <button>В КОРЗИНУ</button>
+                                    <form class="goBasket">
+                                        <button class="submitButtonBasket">В КОРЗИНУ</button>
+                                        <input type="hidden" name="id" value="<?echo $good['id'];?>">
+                                    </form>
                                 </div>
                             </div>
                             <div class="size">
@@ -177,7 +183,7 @@
                         <div class="name">
                             <span><?=$good['title']?></span>
                         </div>
-                        <a href="">
+                        <a href="/cartgoods/<? echo $good['slug_gods'];?>">
                             <div class="img">
                                 <img src="http://miliydom.com.ua/frontend/web/image/<? foreach ($good['image'] as $keyImage => $image){?><?if($image['forHome'] == 1){$i++;?><?=$image['path'] . $image['name']?><?}?><?}?>" alt="">
                                 <span>Артикул: <?=$good['article']['article']?></span>
@@ -211,7 +217,10 @@
                                                 грн
                                             </sup>
                                         </span>
-                                    <button>В КОРЗИНУ</button>
+                                    <form class="goBasket">
+                                        <button class="submitButtonBasket">В КОРЗИНУ</button>
+                                        <input type="hidden" name="id" value="<?echo $good['id'];?>">
+                                    </form>
                                 </div>
                             </div>
                             <div class="size">

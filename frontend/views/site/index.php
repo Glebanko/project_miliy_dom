@@ -1,3 +1,14 @@
+<pre>
+<?var_dump($_COOKIE)?>
+<?echo count($_COOKIE["goods"])?>
+<?
+$get_cook = unserialize($_COOKIE['goods']);
+
+
+print_r($get_cook);
+?>
+</pre>
+
 <?php
 
 /* @var $this yii\web\View */

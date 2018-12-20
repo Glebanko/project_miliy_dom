@@ -81,7 +81,7 @@ AppAsset::register($this);
                 <img src="http://miliydom.com.ua/frontend/web/image/frontendImage/logo.png" alt="" />
             </div>
             <div class="col-md-5 menu-basic-right no-display-max-width">
-                <a href="/cart/cart/index" style="color: black; margin-right: 5px;">
+                <a href="/basket" style="color: black; margin-right: 5px;">
                     <span id="amount-basket"></span> 
                     вещь(ей)
                  </a>
@@ -150,6 +150,108 @@ AppAsset::register($this);
         // With JQuery
         $("#ex2").slider({});
     });
+    
+    $('.basketPlus').click(function() {
+       var count = function(i, val) { return val*1+1 };
+       $(this).parents('.basket-quantity').find('.quantity').attr('value', count); 
+       var summ = $(this).parents('.goodsLine').find('.summ').find('.summa').text();
+       var quantity = $(this).parents('.basket-quantity').find('.quantity').attr('value');
+       var results = summ * quantity;
+       $(this).parents('.basket-quantity').find('.theSumm').attr('value', results);
+       var arraySummPlus = [];
+       $(".theSumm").each(function(index, value){
+          arraySummPlus.push($(value).attr('value'));
+        });
+        var sum = 0;
+        for(var i=0;i<arraySummPlus.length;i++){
+            var sum = sum + parseInt(arraySummPlus[i]);
+        }
+        $('.resultSumm').text(sum);
+    });
+    $('.basketMinus').click(function() {
+        var valueMinus = $(this).parents('.basket-quantity').find('.quantity').attr('value');
+        var summ = $(this).parents('.goodsLine').find('.summ').find('.summa').text();
+        var quantity = $(this).parents('.basket-quantity').find('.quantity').attr('value');
+        var results = $(this).parents('.basket-quantity').find('.theSumm').attr('value');
+        if(valueMinus != 1){
+            var count = function(i, val) { return val*1-1 };
+            $(this).parents('.basket-quantity').find('.quantity').attr('value', count);
+            var minusResult = results - summ;
+            results = minusResult;
+            $(this).parents('.basket-quantity').find('.theSumm').attr('value', results);
+            var arraySumm = [];
+            $(".theSumm").each(function(index, value){
+              arraySumm.push($(value).attr('value'));
+            });
+            var sum = 0;
+            for(var i=0;i<arraySumm.length;i++){
+                var sum = sum + parseInt(arraySumm[i]);
+            }
+            $('.resultSumm').text(sum);
+        }  
+    });
+    /*Конвентировщик из rgb в #**** цвет*/
+        function convertToColor(rgb) {
+                 rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+                 return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+            }
+            hexDigits = new Array
+                ("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"); 
+            function hex(x) {
+              return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+        }
+    /*Конец конвентировщика из rgb в #**** цвет*/
+    $('.youColor').click(function() {
+        if($(this).hasClass('fa-square')){
+            $(this).removeClass('fa-square');
+            $(this).addClass('fa-check-circle');
+            color = (convertToColor($(this).css("color")));
+            $(".cartgoods-color").attr("value", color);
+        }/*else{
+            $(this).removeClass('fa-check-circle');
+            $(this).addClass('fa-square');
+        }*/
+        if($('.youColor').hasClass('fa-check-circle')){
+            $('.youColor').removeClass('fa-check-circle');
+            $('.youColor').addClass('fa-square');
+            $(this).removeClass('fa-square');
+            $(this).addClass('fa-check-circle');
+        }
+    });
+    $('.select-sizes').change(function(){
+        if($(this).val() == 0) return false;
+        size = $(this).val();
+        $(".cartgoods-size").attr("value", size);
+    });
+    $(document).ready(function(){
+       $('.slider-cartgoods').slick({
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+        });
+    });
+    $(document).ready(function(){
+        arraySumm = [];
+        $(".theSumm").each(function(index, value){
+          arraySumm.push($(value).attr('value'));
+        });
+        var sum = 0;
+        for(var i=0;i<arraySumm.length;i++){
+            sum = sum + parseInt(arraySumm[i]);
+        }
+        $('.resultSumm').text(sum);
+    });
+    $(".goCartgoods").submit(function(){
+        $.ajax({
+            type: "POST",
+            url: "/gobasketcookie",
+            data: $(this).serialize(),
+            success: function(){
+                console.log('Есть!');
+            }
+        });
+        return false;
+    });
 </script>
 <?if(!Yii::$app->user->isGuest){?>
     <script>
@@ -169,19 +271,76 @@ AppAsset::register($this);
                 }
             });
         });
-        $("#goBasket").submit(function(){
-            var id = $(this).serialize();
+        $(".goCartgoods").submit(function(){
+            $.ajax({
+                url: "/amountgoods",
+                success: function(html){
+                    $('#amount-basket').html(html);
+                }
+            });
+        });
+        $(".goBasket").submit(function(){
             $.ajax({
                 type: "POST",
-                url: "gobasket",
-                data: id,
+                url: "/gobasket",
+                data: $(this).serialize(),
                 success: function(){
                     console.log('Есть!');
                 }
             });
             return false;
         });
+        
     </script>
+    <?}else{?>
+        <script>
+            $(document).ready(function(){
+                $.ajax({
+                    url: "/searchcookie",
+                    success: function(html){
+                        $('#amount-basket').html(html);
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "/massivecookie",
+                    success: function(){
+                        console.log('Есть!');
+                    }
+                });
+            });
+            $('.submitButtonBasket').click(function(){
+                setTimeout(function () {
+                    $.ajax({
+                        url: "/searchcookie",
+                        success: function(html){
+                            $('#amount-basket').html(html);
+                        }
+                    });
+                }, 200);
+            });
+            $(".goBasket").submit(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "/gobasketcookie",
+                    data: $(this).serialize(),
+                    success: function(){
+                        console.log('Есть!');
+                    }
+                });
+                return false;
+            });
+            $(".goCartgoods").submit(function(){
+                setTimeout(function () {
+                    $.ajax({
+                        url: "/searchcookie",
+                        success: function(html){
+                            $('#amount-basket').html(html);
+                        }
+                    });
+                }, 200);
+            });
+        </script>
     <?}?>
 </body>
 </html>

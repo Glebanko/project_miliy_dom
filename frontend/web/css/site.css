@@ -427,6 +427,8 @@ a.desc:after {
     font-size: 16px;
     display: flex;
     align-items: center;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 .lagout-button:hover {
     color: rgba(255, 255, 255, 0.93);
@@ -1094,9 +1096,125 @@ body {
     border: none;
     outline: none;
 }
+.basket-container{
+    margin-top: 25px; 
+}
+.basket-container > div > table > thead > tr > th, div > table > tbody > tr > td{
+    text-align: center;
+    vertical-align: middle !important;
+}
+.basket-quantity{
+    display: flex;
+    justify-content: center;
+}
+.basket-quantity > button{
+    border: none;
+    background: #D1D0D0;
+    outline: 0;
+}
+.basket-quantity > button > i{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+.basket-quantity > input{
+    text-align: center;
+}
+.quantity{
+    width: 30px;
+    height: 23px;
+}
+.delete-basket{
+    background: none;
+    border: none;
+    outline: 0;
+}
+.delete-basket > i{
+    font-size: 25px;
+}
+.block-cartgoods{
+    margin: 15px;
+}
+.slick-arrow:before{
+    color: black !important;
+}
+.cart-goods:active, :hover, :focus{
+    outline: 0;
+    outline-offset: 0;
+}
+.info{
+    font-size: 10px;
+    color: #6f6e6e;
+    text-align: center;
+}
+.name-cartgoods > h1{
+    font-size: 31px;
+}
+.price > h2{
+    color: #cc0366;
+}
 
-
-
+.color > i{
+    font-size: 45px;
+    width: 50px;
+    text-align: center;
+}
+.buy-button > form > button{
+    width: 237px;
+    font-size: 30px;
+    color: white;
+    background: #cc0366;
+    border: 0px;
+    border-radius: 5px;
+}
+.buy-button > form > button > i{
+    margin-right: 15px;
+}
+.description > p > span{
+    font-weight: bold;
+    margin-right: 5px;
+}
+.slick-slide > a > img{
+    margin: 0px auto !important;
+}
+.slick-slide{
+    overflow: hidden;
+}
+.select-size{
+    width: 240px;
+}
+.select-size > select{
+    font-weight: bold;
+}
+.color{
+    margin-bottom: 15px;
+}
+@media (max-width: 465px) {
+  .img-cartgoods {height: 200px !important;}
+}
+.description{
+    display: flex;
+    flex-direction: column;
+}
+.img-cartgoods:hover {
+    cursor: zoom-in;
+}
+.result-block{
+    float: right;
+}
+.result-block > p{
+    font-size: 18px;
+}
+.result-block > button{
+    border: none;
+    border-radius: 0;
+    background: #D1D0D0;
+    padding: 5px 15px;
+    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: 700;
+    color: #2f353a;
+}
 
 
 

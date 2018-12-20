@@ -3,7 +3,7 @@
 namespace frontend\widget\menu;
 
 use yii\base\Widget;
-use backend\models\Category;
+use common\model\Category;
 use yii\helpers\ArrayHelper;
 use Yii;
 class Menu extends Widget{

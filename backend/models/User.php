@@ -1,57 +1,23 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: root
+ * Date: 20.06.17
+ * Time: 21:56
+ */
 
 namespace backend\models;
 
-use Yii;
 
-/**
- * This is the model class for table "user".
- *
- * @property string $id
- * @property string $username
- * @property string $password
- * @property string $phone
- * @property string $email
- * @property string $address
- * @property string $image
- * @property string $role
- */
-class User extends \yii\db\ActiveRecord
+class User extends \common\models\User
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'user';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
+    public $cookie;
     public function rules()
     {
         return [
-            [['address'], 'string'],
-            [['username', 'password', 'phone', 'email', 'image', 'role'], 'string', 'max' => 255],
-            [['username'], 'unique'],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'username' => 'Username',
-            'password' => 'Password',
-            'phone' => 'Phone',
-            'email' => 'Email',
-            'address' => 'Address',
-            'image' => 'Image',
-            'role' => 'Role',
+            [['created_at', 'updated_at','discount','percent'], 'integer'],
+            [['name', 'tel', 'cookie','adress'], 'string', 'max' => 510],
+            [['email','famaly','officeNewPost','sity'], 'string', 'max' => 255],
         ];
     }
 }
