@@ -1,0 +1,3 @@
+<Limit write>
+DenyUser admin_ftp
+</Limit>

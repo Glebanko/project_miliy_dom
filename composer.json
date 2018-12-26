@@ -12,30 +12,63 @@
         "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/yii2"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "~2.0.6",
-        "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0"
+        "yiisoft/yii2": ">=2.0.6",
+        "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-swiftmailer": "*",
+        "dektrium/yii2-user": "0.9.*@dev",
+        "dektrium/yii2-rbac": "1.0.0-alpha@dev",
+        "dmstr/yii2-adminlte-asset": "2.*",
+        "oncesk/yii-node-socket": "^2.0",
+        "omnilight/yii2-sypexgeo": "*",
+        "2amigos/yii2-transliterator-helper": "dev-master",
+        "2amigos/yii2-ckeditor-widget": "~1.0",
+        "devgroup/yii2-dropzone": "*",
+        "zainiafzan/yii2-dropzone": "dev-master",
+        "yiisoft/yii2-imagine": "^2.0",
+        "intervention/image": "^2.3",
+        "pastuhov/yii2-yml-catalog": "^0.3.3",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-widget-rating": "*",
+        "nizsheanez/yii2-asset-converter": "1.*",
+        "kartik-v/yii2-widget-colorinput": "*",
+        "corpsepk/yii2-yandex-market-yml": "@dev",
+        "kartik-v/yii2-grid": "@dev",
+        "kartik-v/yii2-mpdf": "dev-master",
+        "kartik-v/yii2-editable": "@dev",
+        "mihaildev/yii2-ckeditor": "*",
+        "andig/php-html-parser": "dev-master",
+        "voku/html2text": "^3.4",
+        "sirgalas/yii2-edit-translation": "dev-master",
+        "sirgalas/yii2-wordpress-menu": "dev-master",
+        "sintret/yii2-chat-adminlte": "dev-master",
+        "phpdocumentor/reflection-docblock": "^4.1",
+        "paquettg/php-html-parser": "^1.7",
+        "yiisoft/yii2-redis": "^2.0@dev",
+        "yiisoft/yii2-elasticsearch": "^2.0@dev",
+        "yiisoft/yii2-mongodb": "^2.1@dev",
+        "yii2tech/embedded": "^1.0@dev",
+        "alcaeus/mongo-php-adapter": "^1.1@dev",
+        "sokil/php-mongo": "dev-master"
     },
     "require-dev": {
-        "yiisoft/yii2-debug": "~2.0.0",
-        "yiisoft/yii2-gii": "~2.0.0",
-        "yiisoft/yii2-faker": "~2.0.0",
-        "codeception/base": "^2.2.3",
-        "codeception/verify": "~0.3.1"
+        "yiisoft/yii2-codeception": "*",
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-faker": "*"
     },
     "config": {
-        "process-timeout": 1800,
-        "fxp-asset": {
-            "enabled": false
+        "process-timeout": 1800
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
         }
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        }
-    ]
+    "scripts": {
+        "post-install-cmd": "php init --env=Development --overwrite=n"
+    }
 }

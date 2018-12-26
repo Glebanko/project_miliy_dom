@@ -1,26 +1,83 @@
-<IfModule mod_rewrite.c>
-    Options +FollowSymlinks
-    RewriteEngine On
-</IfModule>
+php_value opcache.enable 0
+php_value max_execution_time 36000
+php_value memory_limit 512M
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine on
 
-<IfModule mod_rewrite.c>
-    # если /admin, то в backend
-    RewriteCond %{REQUEST_URI} ^/(admin)
-    RewriteRule ^admin/assets/(.*)$ backend/web/assets/$1 [L]
-    RewriteRule ^admin/css/(.*)$ backend/web/css/$1 [L]
-    RewriteRule ^admin/js/(.*)$ backend/web/js/$1 [L]
-    RewriteCond %{REQUEST_URI} !^/backend/web/(assets|js|css|js)/
-    RewriteCond %{REQUEST_URI} ^/(admin)
-    RewriteRule ^.*$ backend/web/index.php [L]
-    RewriteCond %{REQUEST_URI} ^/(assets|css|js|images)
-    RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
-    RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
-    RewriteRule ^js/(.*)$ frontend/web/js/$1 [L]
-    RewriteRule ^images/(.*)$ frontend/web/images/$1 [L]
-    RewriteRule ^(.*)$ frontend/web/$1 [L]
-    RewriteCond %{REQUEST_URI} !^/(frontend|backend)/web/(assets|css|js)/
-    RewriteCond %{REQUEST_URI} !index.php
-    RewriteCond %{REQUEST_FILENAME} !-f [OR]
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^.*$ frontend/web/index.php
-</IfModule>
+# Если запрос начинается с /admin, то заменяем на /backend/web/
+RewriteCond %{REQUEST_URI} ^/admin
+RewriteRule ^admin\/?(.*) /backend/web/$1
+
+# Если запрос начинается с /api, то заменяем на /rest/web/
+RewriteCond %{REQUEST_URI} ^/api
+RewriteRule ^api\/?(.*) /rest/web/$1
+
+# Добавляем другой запрос /frontend/web/$1
+RewriteCond %{REQUEST_URI} !^/(frontend/web|backend/web|rest/web|admin|api)
+RewriteRule (.*) /frontend/web/$1
+
+# Если frontend запрос
+RewriteCond %{REQUEST_URI} ^/frontend/web
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /frontend/web/index.php
+
+# Если api запрос
+RewriteCond %{REQUEST_URI} ^/rest/web
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /rest/web/index.php
+
+# Если backend запрос
+RewriteCond %{REQUEST_URI} ^/backend/web
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /backend/web/index.php
+
+php_flag display_errors off
+php_flag display_startup_errors off
+
+Redirect 301 /admin/user/forgot http://miliydom.com.ua/user/forgot
+Redirect 301 /sale.php http://miliydom.com.ua/
+Redirect 301 /tricot.php http://miliydom.com.ua/
+Redirect 301 /menu.php http://miliydom.com.ua/
+Redirect 301 /bedding_attributes.php http://miliydom.com.ua/
+Redirect 301 /man_clothes.php http://miliydom.com.ua/
+Redirect 301 /news.php http://miliydom.com.ua/
+Redirect 301 /new.php http://miliydom.com.ua/
+Redirect 301 /mpostel.php http://miliydom.com.ua/
+Redirect 301 /service.php http://miliydom.com.ua/
+Redirect 301 /single_sale.php http://miliydom.com.ua/
+Redirect 301 /hit.php http://miliydom.com.ua/
+Redirect 301 /index.html http://miliydom.com.ua/
+Redirect 301 /index.php http://miliydom.com.ua/
+
+Redirect 301 /m http://miliydom.com.ua/
+
+RewriteCond %{QUERY_STRING} ^id=(\d+)  
+RewriteRule http://miliydom.com.ua/ [L,R=301]
+
+
+############################################################################
+#### Выбор основного зеркала (или с www или без www)                    ####
+############################################################################
+   # 1. Редирект с www на без www. (раскоментировать директивы пункта 1)
+RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+   # Проверяем, содержит ли домен www (в начале URL).
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+   # Перенаправляем URL на домен без www.
+####
+   # 2. Редирект без www на www. (раскоментировать директивы пункта 2)
+#RewriteCond %{HTTP_HOST} !^www\.(.*) [NC]
+   # Проверяем, не содержит ли домен www (в начале URL).
+#RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+   # Перенаправляем URL на домен c www.
+
+
+ErrorDocument 404 http://miliydom.com.ua/404.php\
+
+RewriteCond %{REQUEST_URI} ^(.*)/{2,}(.*)$
+   # Проверяем, повторяется ли слеш (//) более двух раз.
+RewriteRule . %1/%2 [R=301,L]
+   # Исключаем все лишние слеши.

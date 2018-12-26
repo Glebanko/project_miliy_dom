@@ -1,0 +1,14 @@
+User-agent: *
+Disallow:/cgi-bin/
+Disallow:/admin/
+Disallow:/files/
+Disallow:/images/
+Disallow:/stiles/
+Disallow:/subs/
+Disallow: /debug
+Disallow: /site_search
+Disallow: /error/
+Disallow: /404.php
+Disallow: /cart
+
+Host: www.miliydom.com.ua

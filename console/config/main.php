@@ -1,9 +1,9 @@
 <?php
 $params = array_merge(
-    require __DIR__ . '/../../common/config/params.php',
-    require __DIR__ . '/../../common/config/params-local.php',
-    require __DIR__ . '/params.php',
-    require __DIR__ . '/params-local.php'
+    require(__DIR__ . '/../../common/config/params.php'),
+    require(__DIR__ . '/../../common/config/params-local.php'),
+    require(__DIR__ . '/params.php'),
+    require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -11,15 +11,8 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
-    'aliases' => [
-        '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
-    ],
     'controllerMap' => [
-        'fixture' => [
-            'class' => 'yii\console\controllers\FixtureController',
-            'namespace' => 'common\fixtures',
-          ],
+        'node-socket' => '\YiiNodeSocket\NodeSocketCommand',
     ],
     'components' => [
         'log' => [
@@ -30,6 +23,22 @@ return [
                 ],
             ],
         ],
+        'nodeSocket' => [
+            'class' => '\YiiNodeSocket\NodeSocket',
+            'host' => 'localhost',
+            'allowedServerAddresses' => [
+                "localhost",
+                "127.0.0.1"
+            ],
+            'origin' => ':',
+            'sessionVarName' => 'PHPSESSID',
+            'port' => 3001,
+            'socketLogFile' => '/var/log/node-socket.log',
+        ],
+    ],
+    'modules' => [
+        'rbac' => 'dektrium\rbac\RbacConsoleModule',
+
     ],
     'params' => $params,
 ];

@@ -1,4 +1,3 @@
-<pre>
 <?
 	$prices[] = $good['price']['price1'];
 	$prices[] = $good['price']['price2'];
@@ -7,7 +6,6 @@
 	$resultPrices = array_shift($prices);
 	//print_r($good);
 ?>
-</pre>
 <div class="container">
 	<div class="col-md-6">
 		<div>
