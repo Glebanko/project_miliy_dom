@@ -1,69 +1,52 @@
 <?php
 namespace frontend\controllers;
 
+use Shop\Entities\Basket;
+use Shop\Forms\BasketForm;
+use Shop\Forms\ValidateFormBasket;
+use Shop\Services\BasketService;
 use Yii;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use common\model\SignupForm;
-use common\model\User;
-use frontend\models\ContactForm;
-use common\model\Category;
-use common\model\Goods;
-use common\model\Basket;
-use common\model\Color;
-use frontend\models\validate\validateFormBasket;
+
+//use frontend\models\validate\validateFormBasket;
 
 /**
  * Site controller
  */
 class BasketController extends Controller
 {
+    public $service;
+
+    public function __construct($id, $module,BasketService $service, array $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->service=$service;
+    }
+
     /**
      * {@inheritdoc}
      */
 
     public function actionBasket(){
-        if(Yii::$app->user->isGuest){
-            $goodsCookie = unserialize($_COOKIE['goods']);
-            $amount = count($goodsCookie['goods']);
-            $model = new \frontend\models\validate\validateFormBasket;
-            $model->load(\Yii::$app->request->post());
-            if ($model->validate()) {
-                
+        $form= new  ValidateFormBasket();
+        if($form->load(Yii::$app->request->post())&&$form->validate()){
+            if(Yii::$app->user->isGuest) {
+                $goodsCookie = unserialize($_COOKIE['goods']);// todo хранить товар в куках плохая мысль используй redis
+                $goods = $this->service->IsGuest($goodsCookie);
             }else{
-                $errors = $model->errors;
+                $goods =  $this->service->usertIdentity();
             }
-            foreach ($goodsCookie['goods'] as $good) {
-                $goodsId[] = $good['idGoods'];
-            }
-            foreach ($goodsCookie['goods'] as $good) {
-                $goodsToCookie[] = $good;
-            }
-            $goods = Goods::find()->with(['article', 'image', 'price', 'size'])->where(['id' => $goodsId])->asArray()->all();
-            //echo "<pre>"; var_dump($goodsi); echo "</pre>";
-            return $this->render('basket', ['goods' => $goods, 'goodsId' => $goodsId, 'goodsToCookie' => $goodsToCookie, 'model' => $model, 'error' => $error]);
-        }else{
-            $model = new \frontend\models\validate\validateFormBasket;
-            $model->load(\Yii::$app->request->post());
-            if ($model->validate()) {
-                
-            }else{
-                $errors = $model->errors;
-            }
-            $goods = Basket::find()->with(['goods', 'goods.article', 'goods.image', 'goods.price', 'goods.size'])->where(['confirmed' => '0'])->asArray()->all(); 
-                return $this->render('basket', ['goods' => $goods, 'model' => $model, 'error' => $error]);
-           
+            return $this->render(
+                'basket', [
+                    $goods,
+                    'model' => $form]);
         }
+        Yii::error($form->errors); //todo тут надо что то вернуть пустое
     }
+
     public function actionMassivecookie(){
         $goodsCookie = unserialize($_COOKIE['goods']);
-        $emptyCookie['goods'][] = null; 
+        $emptyCookie['goods'][] = null;
         if(empty($goodsCookie)){
            setcookie('goods', serialize($emptyCookie));
         }
@@ -87,18 +70,20 @@ class BasketController extends Controller
            }
        }
     }
+
    public function actionGobasket(){
-    $idGoods = $_POST['id'];
-    $price = $_POST['price'];
-    $model = new Basket;
-            $model -> id_goods = $idGoods;
-            $model -> id_user = Yii::$app->user->identity->id;
-            $model -> active = '1';
-            $model -> amount = '1';
-            $model -> confirmed = '0';
-            $model -> price = $price;
-            $model -> save();
+        $form=new BasketForm();
+        if($form->load(Yii::$app->request->post(),'')&&$form->validate()){
+            try{
+                $this->service->create($form,Yii::$app->user->identity->id);
+            }catch (\RuntimeException $e){
+                Yii::error($e);
+                Yii::$app->session->setFlash('error','Корзина не сохраниласьть обратитесь к администратору');
+            }
+        }
     }
+
+
     public function actionBasketrequest(){
         if (Yii::$app->request->post()){
             if(Yii::$app->user->isGuest){
@@ -150,7 +135,7 @@ class BasketController extends Controller
                     <h3 style='text-align: center;'>В ближайшее время мы свяжемся с Вами!</h3></div>
                 ";
             }
-            
+
         }
     }
     public function actionGobasketcookie(){
