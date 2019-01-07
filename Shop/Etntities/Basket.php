@@ -3,6 +3,7 @@
 namespace Shop\Entities;
 
 use common\model\Goods;
+use Shop\Forms\BasketForm;
 
 /**
  * This is the model class for table "basket".
@@ -38,6 +39,32 @@ class Basket extends \yii\db\ActiveRecord
         $bascet->amount = '1';
         $bascet->confirmed = '0';
         $bascet->price = $price;
+        return $bascet;
+    }
+
+    public static function createPostAdnCookie(BasketForm $form,array $goods):self
+    {
+        $bascet=new static();
+        $bascet->id_goods = $form->id_goods;
+        $bascet->id_user = $form->id_user;
+        $bascet->confirmed = $form->confirmed;
+        $bascet->price = $form->price;
+        $bascet->name = $form->name;
+        $bascet->surname = $form->surname;
+        $bascet-> email = $form->email;
+        $bascet->phone = $form->phone;
+        $bascet->city = $form->city;
+        $bascet->deliveryAddress = $form->deliveryAddress;
+        $bascet->postOffice = $form->postOffice;
+        $bascet-> comments = $form->comments;
+        $bascet-> id_goods = $goods['idGoods'];
+        $bascet-> id_user = '0';
+        $bascet-> active = '0';
+        $bascet-> amount = $goods['amount'];
+        $bascet-> confirmed = '1';
+        $bascet-> price = $goods['price'];
+        $bascet-> color = $goods['color'];
+        $bascet-> size = $goods['size'];
         return $bascet;
     }
 

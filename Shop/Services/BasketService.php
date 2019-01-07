@@ -52,6 +52,12 @@ class BasketService
         $this->basketRepository->save($basket);
     }
 
+    public function createPostAdnCookie(BasketForm $form,array $array)
+    {
+        $basket= Basket::createPostAdnCookie($form,$array);
+        $this->basketRepository->save($basket);
+    }
+
 
 
 

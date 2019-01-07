@@ -85,28 +85,12 @@ class BasketController extends Controller
 
 
     public function actionBasketrequest(){
-        if (Yii::$app->request->post()){
+        $form=new BasketForm();
+        if ($form->load(Yii::$app->request->post())&&$form->validate()){
             if(Yii::$app->user->isGuest){
                 $goodsCookie = unserialize($_COOKIE['goods']);
                 foreach ($goodsCookie['goods'] as $goods) {
-                    $model = new Basket;
-                        $model -> name = $_POST['validateFormBasket']['name'];
-                        $model -> surname = $_POST['validateFormBasket']['surname'];
-                        $model -> email = $_POST['validateFormBasket']['email'];
-                        $model -> phone = $_POST['validateFormBasket']['phone'];
-                        $model -> city = $_POST['validateFormBasket']['city'];
-                        $model -> deliveryAddress = $_POST['validateFormBasket']['deliveryAddress'];
-                        $model -> postOffice = $_POST['validateFormBasket']['postOffice'];
-                        $model -> comments = $_POST['validateFormBasket']['comments'];
-                        $model -> id_goods = $goods['idGoods'];
-                        $model -> id_user = '0';
-                        $model -> active = '0';
-                        $model -> amount = $goods['amount'];
-                        $model -> confirmed = '1';
-                        $model -> price = $goods['price'];
-                        $model -> color = $goods['color'];
-                        $model -> size = $goods['size'];
-                        $model -> save();
+                    $this->service->createPostAdnCookie($form,$goods);
                 }
                 $psevdCookie['goods'][] = null;
                 setcookie('goods', serialize($psevdCookie));
